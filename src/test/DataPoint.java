@@ -11,6 +11,18 @@ public class DataPoint {
         this.languageIndex = languageIndex;
     }
 
+    // Dodać konstruktor dla binarnej klasyfikacji
+    public DataPoint(double[] features, int expectedOutput) {
+        this.features = features.clone();
+        this.language = String.valueOf(expectedOutput);
+        this.languageIndex = expectedOutput;
+    }
+
+    // Dodać metodę getExpectedOutput
+    public double getExpectedOutput() {
+        return languageIndex;
+    }
+
     public double[] getFeatures() {
         return features.clone();
     }

@@ -43,6 +43,13 @@ public class Perceptron {
         return sum;
     }
 
+    public double computeNet(double[] features) {
+        if (features.length != dimension) {
+            throw new IllegalArgumentException("Nieprawidłowy wymiar");
+        }
+        return calculateWeightedSum(features);
+    }
+
     public void learn(List<DataPoint> data, int epochs) {
         for (int epoch = 0; epoch < epochs; epoch++) {
             int errors = 0;

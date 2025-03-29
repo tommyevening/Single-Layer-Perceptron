@@ -1,8 +1,10 @@
 package test;
 
+import java.util.Scanner;
+
 public class Main {
-    private static final String TRAIN_DIRECTORY = "data/train/";
-    private static final String TEST_DIRECTORY = "data/test/";
+    private static final String TRAIN_DIRECTORY = "src/data/train/";
+    private static final String TEST_DIRECTORY = "src/data/test/";
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
