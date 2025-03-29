@@ -1,5 +1,3 @@
-package test;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -11,7 +9,6 @@ public class TextProcessor {
         double[] letterFrequencies = new double[ALPHABET_SIZE];
         int totalLetters = 0;
 
-        // Konwersja na małe litery i zliczanie
         text = text.toLowerCase();
         for (char c : text.toCharArray()) {
             if (c >= 'a' && c <= 'z') {
@@ -20,7 +17,6 @@ public class TextProcessor {
             }
         }
 
-        // Normalizacja normą euklidesową
         if (totalLetters > 0) {
             double norm = 0;
             for (double freq : letterFrequencies) {

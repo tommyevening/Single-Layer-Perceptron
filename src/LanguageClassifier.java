@@ -1,5 +1,3 @@
-package test;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -8,10 +6,9 @@ public class LanguageClassifier {
     private final Map<String, Integer> languageToIndex;
     private final List<String> languages;
     private final MultiClassPerceptron classifier;
-    private static final int FEATURE_SIZE = 26; // liczba liter w alfabecie
+    private static final int FEATURE_SIZE = 26;
 
     public LanguageClassifier(String trainingDataPath) {
-        // Automatyczne wykrywanie języków z katalogów
         this.languages = detectLanguages(trainingDataPath);
         this.languageToIndex = createLanguageMapping();
 
@@ -20,7 +17,6 @@ public class LanguageClassifier {
             System.out.println("- " + lang);
         }
 
-        // Inicjalizacja perceptronu z wykrytą liczbą klas
         this.classifier = new MultiClassPerceptron(languages.size(), FEATURE_SIZE, 0.01);
     }
 
@@ -43,7 +39,7 @@ public class LanguageClassifier {
             throw new IllegalStateException("Nie znaleziono katalogów z danymi językowymi w: " + directoryPath);
         }
 
-        Collections.sort(detectedLanguages); // dla spójnej kolejności
+        Collections.sort(detectedLanguages);
         return detectedLanguages;
     }
 
@@ -96,8 +92,6 @@ public class LanguageClassifier {
     private double evaluateAccuracy(List<DataPoint> testData) {
         int correct = 0;
         int total = testData.size();
-
-        // Macierz pomyłek dla szczegółowej analizy
         int[][] confusionMatrix = new int[languages.size()][languages.size()];
 
         for (DataPoint dp : testData) {
@@ -109,7 +103,6 @@ public class LanguageClassifier {
             }
         }
 
-        // Wyświetlenie szczegółowych statystyk
         System.out.println("\nMacierz pomyłek:");
         System.out.print("Rzecz./Pred.\t");
         for (String lang : languages) {

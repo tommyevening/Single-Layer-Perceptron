@@ -1,5 +1,3 @@
-package test;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +12,6 @@ public class MultiClassPerceptron {
         this.dimension = dimension;
         this.perceptrons = new ArrayList<>();
 
-        // Create a perceptron for each language
         for (int i = 0; i < numClasses; i++) {
             perceptrons.add(new Perceptron(dimension, alpha));
         }
@@ -24,7 +21,6 @@ public class MultiClassPerceptron {
         double maxOutput = Double.NEGATIVE_INFINITY;
         int predictedClass = 0;
 
-        // Find the perceptron with highest output
         for (int i = 0; i < numClasses; i++) {
             double output = perceptrons.get(i).computeNet(features);
             if (output > maxOutput) {
@@ -39,15 +35,12 @@ public class MultiClassPerceptron {
     public void train(List<DataPoint> trainingData, int epochs) {
         for (int i = 0; i < numClasses; i++) {
             final int currentClass = i;
-
-            // Prepare data for one-vs-all classification
             List<DataPoint> binaryData = trainingData.stream()
                     .map(dp -> new DataPoint(
                             dp.getFeatures(),
                             dp.getLanguageIndex() == currentClass ? 1 : 0))
                     .collect(Collectors.toList());
 
-            // Train the perceptron for this class
             perceptrons.get(i).learn(binaryData, epochs);
         }
     }

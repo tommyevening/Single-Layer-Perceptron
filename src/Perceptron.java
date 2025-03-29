@@ -1,6 +1,3 @@
-// Perceptron.java
-package done;
-
 import java.util.List;
 import java.util.Random;
 
@@ -9,7 +6,7 @@ public class Perceptron {
     private final double[] weights;
     private final int dimension;
     private final double alpha;
-    private int theta;
+    private double theta;
 
     public Perceptron(int dimension, double alpha) {
         this.random = new Random();
@@ -25,7 +22,7 @@ public class Perceptron {
         }
     }
 
-    public void setTheta(int theta) {
+    public void setTheta(double theta) {
         this.theta = theta;
     }
 
@@ -42,6 +39,13 @@ public class Perceptron {
             sum += features[i] * weights[i];
         }
         return sum;
+    }
+
+    public double computeNet(double[] features) {
+        if (features.length != dimension) {
+            throw new IllegalArgumentException("Nieprawidłowy wymiar");
+        }
+        return calculateWeightedSum(features);
     }
 
     public void learn(List<DataPoint> data, int epochs) {
@@ -73,5 +77,6 @@ public class Perceptron {
         for (int i = 0; i < dimension; i++) {
             weights[i] += alpha * error * features[i];
         }
+        theta = theta - error * alpha;
     }
 }

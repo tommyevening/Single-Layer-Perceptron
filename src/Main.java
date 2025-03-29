@@ -1,32 +1,78 @@
-import java.util.Vector;
+import java.util.Scanner;
 
 public class Main {
+    private static final String TRAIN_DIRECTORY = "src/data/train/";
+    private static final String TEST_DIRECTORY = "src/data/test/";
+    private static final Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
-        Vector<Double> vectorX = new Vector<>();
-        vectorX.add(1.0);
-        vectorX.add(2.0);
-        vectorX.add(2.0);
+        try {
+            System.out.println("Inicjalizacja klasyfikatora językowego...");
+            LanguageClassifier classifier = new LanguageClassifier(TRAIN_DIRECTORY);
 
+            while (true) {
+                System.out.println("\nWybierz opcję:");
+                System.out.println("1. Trenuj model");
+                System.out.println("2. Testuj model");
+                System.out.println("3. Klasyfikuj tekst");
+                System.out.println("4. Wyjście");
 
-        vectorX = normalizeVector(vectorX);
-        for (int i = 0; i < vectorX.size(); i++) {
-            System.out.println(vectorX.get(i));
+                int choice = Integer.parseInt(scanner.nextLine());
+
+                switch (choice) {
+                    case 1:
+                        trainModel(classifier);
+                        break;
+                    case 2:
+                        testModel(classifier);
+                        break;
+                    case 3:
+                        classifyNewText(classifier);
+                        break;
+                    case 4:
+                        return;
+                    default:
+                        System.out.println("Nieprawidłowy wybór");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Błąd: " + e.getMessage());
+            e.printStackTrace();
         }
-
-
     }
 
-    public static Vector<Double> normalizeVector(Vector<Double> vector) {
+    private static void trainModel(LanguageClassifier classifier) {
+        System.out.print("Podaj liczbę epok (10-1000): ");
+        int epochs = Integer.parseInt(scanner.nextLine());
 
-        Vector<Double> tempVector = new Vector<>();
-        double sum = 0;
-        for (int i = 0; i < vector.size(); i++) {
-            sum += Math.pow(vector.get(i), 2);
-        }
+        System.out.println("Rozpoczynam trenowanie...");
+        classifier.train(TRAIN_DIRECTORY, epochs);
+        System.out.println("Zakończono trenowanie");
+    }
 
-        for (Double val : vector) {
-            tempVector.add(val / Math.sqrt(sum));
+    private static void testModel(LanguageClassifier classifier) {
+        System.out.println("Testowanie modelu...");
+        double accuracy = classifier.test(TEST_DIRECTORY);
+        System.out.printf("Dokładność: %.2f%%\n", accuracy * 100);
+    }
+
+    private static void classifyNewText(LanguageClassifier classifier) {
+        System.out.println("Wprowadź tekst do klasyfikacji (lub 'exit' aby wrócić):");
+        while (true) {
+            String input = scanner.nextLine();
+
+            if (input.equalsIgnoreCase("exit")) {
+                break;
+            }
+
+            if (input.trim().isEmpty()) {
+                System.out.println("Tekst nie może być pusty. Spróbuj ponownie:");
+                continue;
+            }
+
+            String predictedLanguage = classifier.classifyText(input);
+            System.out.println("Wykryty język: " + predictedLanguage);
+            System.out.println("\nWprowadź kolejny tekst (lub 'exit' aby wrócić):");
         }
-        return tempVector;
     }
 }
