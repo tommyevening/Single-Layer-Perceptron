@@ -141,17 +141,8 @@ public class LanguageClassifier {
 
     public String classifyText(String text) {
         double[] features = TextProcessor.processText(text);
-        int[] prediction = model.predict(features);
-
-        // Znajdź indeks maksymalnej wartości w wektorze decyzji
-        int maxIndex = 0;
-        for (int i = 1; i < prediction.length; i++) {
-            if (prediction[i] > prediction[maxIndex]) {
-                maxIndex = i;
-            }
-        }
-
-        return languages.get(maxIndex);
+        int predictedIndex = model.predict(features);
+        return languages.get(predictedIndex);
     }
 
     public List<String> getLanguages() {
