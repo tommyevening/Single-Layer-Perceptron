@@ -9,26 +9,21 @@ public class TextProcessor {
         double[] features = new double[26];
         text = text.toLowerCase();
 
-        // Zliczanie wystąpień liter
         for (char c : text.toCharArray()) {
             if (c >= 'a' && c <= 'z') {
                 features[c - 'a']++;
             }
         }
 
-        // Normalizacja przy użyciu normy Euklidesowej
-        double sumOfSquares = 0;
+        // Normalizacja
+        double sum = 0;
         for (double feature : features) {
-            sumOfSquares += feature * feature;
+            sum += feature;
         }
 
-        // Obliczanie pierwiastka z sumy kwadratów (norma Euklidesowa)
-        double euclideanNorm = Math.sqrt(sumOfSquares);
-
-        // Normalizacja wektora (jeśli norma jest większa od 0)
-        if (euclideanNorm > 0) {
+        if (sum > 0) {
             for (int i = 0; i < features.length; i++) {
-                features[i] /= euclideanNorm;
+                features[i] /= sum;
             }
         }
 
