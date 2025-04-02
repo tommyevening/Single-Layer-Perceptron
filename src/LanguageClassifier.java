@@ -2,6 +2,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+/*
+Klasa odpoweidzialna za klsyfikowanie teksu do odpowiedniego języka
+ */
 public class LanguageClassifier {
     private final Map<String, Integer> languageToIndex;
     private final List<String> languages;
@@ -25,6 +28,9 @@ public class LanguageClassifier {
         );
     }
 
+    /*
+    Detektowanie języków na podstawie katalogów z danymi
+     */
     private List<String> detectLanguages(String directoryPath) {
         File directory = new File(directoryPath);
         List<String> detectedLanguages = new ArrayList<>();
@@ -48,6 +54,10 @@ public class LanguageClassifier {
         return detectedLanguages;
     }
 
+
+    /*
+    Tworzenie mapowania języków na indeksy
+     */
     private Map<String, Integer> createLanguageMapping() {
         Map<String, Integer> mapping = new HashMap<>();
         for (int i = 0; i < languages.size(); i++) {
@@ -56,12 +66,18 @@ public class LanguageClassifier {
         return mapping;
     }
 
+    /*
+    Trenowanie modelu na podstawie danych uczących
+     */
     public void train(String trainingDataPath, int epochs) {
         List<DataPoint> trainingData = loadData(trainingDataPath);
-        model.setEpochs(epochs); // Dodaj metodę setEpochs w klasie Model
+        model.setEpochs(epochs);
         model.fit(trainingData);
     }
 
+    /*
+    Testowanie modelu na podstawie danych testowych
+     */
     public double test(String testDataPath) {
         List<DataPoint> testData = loadData(testDataPath);
         int correct = 0;
@@ -105,6 +121,9 @@ public class LanguageClassifier {
         return data;
     }
 
+    /*
+    Klasyfikuj tekst do odpowiedniego języka
+     */
     public String classifyText(String text) {
         double[] features = TextProcessor.processText(text);
         int predictedIndex = model.predict(features);

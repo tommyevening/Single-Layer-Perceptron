@@ -2,11 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
-/*
-    Klasa implementujaca mperceptron wieloklasowy
-
- */
 public class MultiClassPerceptron {
     private final List<Perceptron> perceptrons;
     private final int numClasses;

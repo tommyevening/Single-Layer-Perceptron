@@ -1,5 +1,10 @@
 import java.util.List;
 
+
+/*
+    Klasa implementujaca model klasyfikacji wieloklasowej
+
+ */
 public class Model {
     private Perceptron[] perceptrons;
     private int epochs;
@@ -14,12 +19,17 @@ public class Model {
         }
     }
 
+
+
+    /*
+    Trenowanie modelu na zbiorze danych treningowych
+     */
     public void fit(List<DataPoint> trainingData) {
-        // Trenowanie każdego perceptronu
+        //Trening kazdego perceptronu
         for (int i = 0; i < perceptrons.length; i++) {
             final int currentClass = i;
 
-            // Przygotowanie danych dla treningu binarnego (one-vs-all)
+
             List<DataPoint> binaryData = trainingData.stream()
                     .map(dp -> new DataPoint(
                             dp.getFeatures(),
@@ -33,6 +43,9 @@ public class Model {
         }
     }
 
+    /*
+    Predykcja klasy
+     */
     public int predict(double[] features) {
         double maxOutput = Double.NEGATIVE_INFINITY;
         int predictedClass = -1;

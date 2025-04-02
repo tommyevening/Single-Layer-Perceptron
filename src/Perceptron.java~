@@ -2,6 +2,7 @@ import java.util.List;
 import java.util.Random;
 
 
+
 /*
     Klasa implementujaca model perceptronu jednowartowego
  */
@@ -70,10 +71,6 @@ public class Perceptron {
         return calculateWeightedSum(features) - theta;
     }
 
-
-    /*
-    Proces uczenia perceptronu na danych wejsciowych
-     */
     public void learn(List<DataPoint> data, int epochs) {
         for (int epoch = 0; epoch < epochs; epoch++) {
             int errors = 0;
@@ -98,9 +95,6 @@ public class Perceptron {
         }
     }
 
-    /*
-        Aktualizacja wag na podstawie błedu
-     */
     private void updateWeights(DataPoint point, double error) {
         double[] features = point.getFeatures();
         for (int i = 0; i < dimension; i++) {
