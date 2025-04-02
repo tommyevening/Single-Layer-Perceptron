@@ -18,7 +18,7 @@ public class LanguageClassifier {
             System.out.println("- " + lang);
         }
 
-        // Inicjalizacja modelu zgodnie z wymaganym konstruktorem
+        // Inicjalizacja modelu z parametrami
         this.model = new Model(
                 alpha,           // współczynnik uczenia
                 theta,          // próg aktywacji
@@ -60,18 +60,7 @@ public class LanguageClassifier {
 
     public void train(String trainingDataPath, int epochs) {
         List<DataPoint> trainingData = loadData(trainingDataPath);
-
-        // Przygotowanie danych wejściowych i wyjściowych dla modelu
-        double[][] inputs = new double[trainingData.size()][];
-        int[] outputs = new int[trainingData.size()];
-
-        for (int i = 0; i < trainingData.size(); i++) {
-            inputs[i] = trainingData.get(i).getFeatures();
-            outputs[i] = trainingData.get(i).getLanguageIndex();
-        }
-
-        // Trenowanie modelu
-        model.fit(inputs, outputs);
+        model.fit(trainingData);
     }
 
     public double test(String testDataPath) {
@@ -141,17 +130,8 @@ public class LanguageClassifier {
 
     public String classifyText(String text) {
         double[] features = TextProcessor.processText(text);
-        int[] prediction = model.predict(features);
-
-        // Znajdź indeks maksymalnej wartości w wektorze decyzji
-        int maxIndex = 0;
-        for (int i = 1; i < prediction.length; i++) {
-            if (prediction[i] > prediction[maxIndex]) {
-                maxIndex = i;
-            }
-        }
-
-        return languages.get(maxIndex);
+        int predictedIndex = model.predict(features);
+        return languages.get(predictedIndex);
     }
 
     public List<String> getLanguages() {
