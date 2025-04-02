@@ -58,7 +58,6 @@ public class LanguageClassifier {
 
     public void train(String trainingDataPath, int epochs) {
         List<DataPoint> trainingData = loadData(trainingDataPath);
-        model.setEpochs(epochs); // Dodaj metodę setEpochs w klasie Model
         model.fit(trainingData);
     }
 

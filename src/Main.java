@@ -12,7 +12,7 @@ public class Main {
             // Pobieranie i walidacja współczynnika uczenia
             double alpha;
             while (true) {
-                System.out.print("Podaj współczynnik uczenia (ALPHA) (0.0001-0.1): ");
+                System.out.print("Podaj współczynnik uczenia (ALPHA) (0.01-1.0): ");
                 try {
                     alpha = Double.parseDouble(scanner.nextLine());
                     if (isValidAlpha(alpha)) break;
@@ -22,10 +22,10 @@ public class Main {
                 }
             }
 
-            // Pobieranie i walidacja progu aktywacji
+            // Pobieranie i walidacja progu decyzyjnego
             double theta;
             while (true) {
-                System.out.print("Podaj próg aktywacji (THETA) (-1.0-1.0): ");
+                System.out.print("Podaj próg decyzyjny (THETA) (0-10): ");
                 try {
                     theta = Double.parseDouble(scanner.nextLine());
                     if (isValidTheta(theta)) break;
@@ -151,17 +151,17 @@ public class Main {
         System.out.println("\nParametry modelu:");
         System.out.println("----------------------------------------");
         System.out.println("Współczynnik uczenia (ALPHA): " + alpha);
-        System.out.println("Próg aktywacji (THETA): " + theta);
+        System.out.println("Próg decyzyjny (THETA): " + theta);
         System.out.println("Liczba wykrytych języków: " + classifier.getLanguages().size());
         System.out.println("Dostępne języki: " + String.join(", ", classifier.getLanguages()));
         System.out.println("----------------------------------------");
     }
 
     private static boolean isValidAlpha(double alpha) {
-        return alpha >= 0.0001 && alpha <= 0.1;
+        return alpha >= 0.01 && alpha <= 1.0;
     }
 
     private static boolean isValidTheta(double theta) {
-        return theta >= -1.0 && theta <= 1.0;
+        return theta >= 0 && theta <= 10;
     }
 }

@@ -35,9 +35,10 @@ public class Model {
 
     public int predict(double[] features) {
         double maxOutput = Double.NEGATIVE_INFINITY;
-        int predictedClass = 0;
+        int predictedClass = -1;
 
         for (int i = 0; i < perceptrons.length; i++) {
+            // Oblicz wartość net dla perceptronu i uwzględnij próg
             double output = perceptrons[i].computeNet(features);
             if (output > maxOutput) {
                 maxOutput = output;
@@ -46,5 +47,9 @@ public class Model {
         }
 
         return predictedClass;
+    }
+
+    public void setEpochs(int epochs) {
+        this.epochs = epochs;
     }
 }

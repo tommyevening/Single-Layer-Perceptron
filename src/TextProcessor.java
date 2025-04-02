@@ -6,30 +6,28 @@ public class TextProcessor {
     private static final int ALPHABET_SIZE = 26;
 
     public static double[] processText(String text) {
-        double[] letterFrequencies = new double[ALPHABET_SIZE];
-        int totalLetters = 0;
-
+        double[] features = new double[26];
         text = text.toLowerCase();
+
         for (char c : text.toCharArray()) {
             if (c >= 'a' && c <= 'z') {
-                letterFrequencies[c - 'a']++;
-                totalLetters++;
+                features[c - 'a']++;
             }
         }
 
-        if (totalLetters > 0) {
-            double norm = 0;
-            for (double freq : letterFrequencies) {
-                norm += freq * freq;
-            }
-            norm = Math.sqrt(norm);
+        // Normalizacja
+        double sum = 0;
+        for (double feature : features) {
+            sum += feature;
+        }
 
-            for (int i = 0; i < ALPHABET_SIZE; i++) {
-                letterFrequencies[i] /= norm;
+        if (sum > 0) {
+            for (int i = 0; i < features.length; i++) {
+                features[i] /= sum;
             }
         }
 
-        return letterFrequencies;
+        return features;
     }
 
     public static String readTextFile(String filePath) throws IOException {

@@ -45,7 +45,8 @@ public class Perceptron {
         if (features.length != dimension) {
             throw new IllegalArgumentException("Nieprawidłowy wymiar");
         }
-        return calculateWeightedSum(features);
+        // Oblicz sumę ważoną i odejmij wartość progu
+        return calculateWeightedSum(features) - theta;
     }
 
     public void learn(List<DataPoint> data, int epochs) {
